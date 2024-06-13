@@ -1,0 +1,64 @@
+import random
+
+class suit:
+    def __init__(self, nama):
+        self.nama = nama
+
+    def pesan_selamat_datang(self):
+        print(f"Selamat datang di {self.nama}!")
+        print("Instruksi: Pilih (G)unting, (K)ertas, atau (B)atu. Ketik 'S' untuk selesai.")
+
+    def pesan_selamat_tinggal(self):
+        print("Terima kasih telah bermain!")
+
+class PermainanGunKerBat(suit):
+    def __init__(self):
+        super().__init__("Permainan Gunting, Kertas, Batu")
+
+    def pilihan_pemain(self):
+        while True:
+            pilihan = input("Pilih (G)unting, (K)ertas, atau (B)atu, atau (S)elesai: ").upper()
+            if pilihan in ['G', 'K', 'B', 'S']:
+                return pilihan
+            else:
+                print("Pilihan tidak valid. Silakan coba lagi.")
+
+    def pilihan_komputer(self):
+        return random.choice(['G', 'K', 'B'])
+
+    def terjemahkan_pilihan(self, pilihan):
+        if pilihan == 'G':
+            return "Gunting"
+        elif pilihan == 'K':
+            return "Kertas"
+        elif pilihan == 'B':
+            return "Batu"
+
+    def bandingkan_pilihan(self, pilihan_pemain, pilihan_komputer):
+        if pilihan_pemain == pilihan_komputer:
+            return "Hasil: Seri!"
+        elif (pilihan_pemain == 'G' and pilihan_komputer == 'K') or \
+             (pilihan_pemain == 'K' and pilihan_komputer == 'B') or \
+             (pilihan_pemain == 'B' and pilihan_komputer == 'G'):
+            return "Anda Menang!"
+        else:
+            return "Anda Kalah!"
+
+    def main(self):
+        self.pesan_selamat_datang()
+        while True:
+            pilihan_pemain = self.pilihan_pemain()
+            if pilihan_pemain == 'S':
+                self.pesan_selamat_tinggal()
+                break
+            pilihan_komputer = self.pilihan_komputer()
+            print("Komputer memilih:", self.terjemahkan_pilihan(pilihan_komputer))
+            print(self.bandingkan_pilihan(pilihan_pemain, pilihan_komputer))
+            main_lagi = input("Apakah Anda ingin bermain lagi? (y/n): ").lower()
+            if main_lagi != 'y':
+                self.pesan_selamat_tinggal()
+                break
+
+if __name__ == "__main__":
+    permainan = PermainanGunKerBat()
+    permainan.main()
